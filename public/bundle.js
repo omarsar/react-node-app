@@ -23567,7 +23567,7 @@
 /* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
 	var React = __webpack_require__(1); //require the library
 	var Router = __webpack_require__(157);
@@ -23588,7 +23588,8 @@
 		},
 
 		componentWillMount: function componentWillMount() {
-			this.socket = io('http://localhost:3000');
+			process.env.NODE_ENV === 'development' ? this.socket = io('http://localhost:5000') : this.socket = io('https://fathomless-sea-2599.herokuapp.com');
+			//this.socket = io('https://fathomless-sea-2599.herokuapp.com');
 			this.socket.on('connect', this.connect);
 			this.socket.on('disconnect', this.disconnect);
 			this.socket.on('welcome', this.welcome);
@@ -23617,6 +23618,7 @@
 	});
 
 	module.exports = APP;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
 /* 197 */
