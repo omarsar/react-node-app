@@ -1,6 +1,6 @@
 ## Running Locally
 
-This is just a fun app to mess around with node, react and sockets.
+This is just a fun app to mess around with node, react and sockets. We will see how far I get with this new journey.
 
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
 
