@@ -1,0 +1,13 @@
+//run server
+node app-server.js
+
+
+//package files and libraries : package.json
+npm init
+npm install //get the libaries back from node_modules
+
+
+props == properties
+
+
+
