@@ -13,4 +13,4 @@ $ npm start
 ```
 
 Side notes: I have changed the $PORT number to 5000 in order to be able to run this app on Heroku. 
-Also, you might want to change APP.js so that it looks for where your app is hosted. Change this address (https://fathomless-sea-2599.herokuapp.com) to your own address. That is it! Have fun!
+Also, you might want to change APP.js so that it looks for where your app is hosted. Change this address (https://fathomless-sea-2599.herokuapp.com) to your own address. You won't need this if you are just running the app locally. That is it! Have fun! 
