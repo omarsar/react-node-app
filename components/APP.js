@@ -4,7 +4,6 @@ var RouteHandler = Router.RouteHandler;
 var io = require('socket.io-client');
 var Header =  require('./parts/Header');
 
-
 //this is the first react component
 var APP = React.createClass({
 
@@ -25,9 +24,6 @@ var APP = React.createClass({
 	},
 
 	emit(eventName, payload){
-		var env = process.env.NODE_ENV || 'dev';
-		alert(env);
-		//alert(process.env.NODE_ENV)
 		this.socket.emit(eventName, payload);
 	},
 
@@ -52,5 +48,7 @@ var APP = React.createClass({
 		);
 	}
 });
+
+
 
 module.exports = APP;

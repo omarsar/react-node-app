@@ -23598,9 +23598,7 @@
 		},
 
 		emit: function emit(eventName, payload) {
-			var env = process.env.NODE_ENV || 'dev';
-			alert(env);
-			//alert(process.env.NODE_ENV)
+			alert(process.env.NODE_ENV);
 			this.socket.emit(eventName, payload);
 		},
 
