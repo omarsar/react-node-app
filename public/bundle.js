@@ -23567,7 +23567,7 @@
 /* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -23590,7 +23590,7 @@
 		},
 
 		componentWillMount: function componentWillMount() {
-			 false ? this.socket = io('https://fathomless-sea-2599.herokuapp.com') : this.socket = io('http://localhost:5000');
+			process.env.NODE_ENV === 'production' ? this.socket = io('https://fathomless-sea-2599.herokuapp.com') : this.socket = io('http://localhost:5000');
 			//this.socket = io('http://localhost:5000');
 			this.socket.on('connect', this.connect);
 			this.socket.on('disconnect', this.disconnect);
@@ -23598,6 +23598,9 @@
 		},
 
 		emit: function emit(eventName, payload) {
+			var env = process.env.NODE_ENV || 'dev';
+			alert(env);
+			//alert(process.env.NODE_ENV)
 			this.socket.emit(eventName, payload);
 		},
 
@@ -23624,6 +23627,7 @@
 	});
 
 	module.exports = APP;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
 /* 197 */
