@@ -23590,7 +23590,7 @@
 		},
 
 		componentWillMount: function componentWillMount() {
-			process.env.NODE_ENV === undefined ? this.socket = io('http://localhost:5000') : this.socket = io('https://fathomless-sea-2599.herokuapp.com');
+			process.env.NODE_ENV === 'production' ? this.socket = io('https://fathomless-sea-2599.herokuapp.com') : this.socket = io('http://localhost:5000');
 			//this.socket = io('http://localhost:5000');
 			this.socket.on('connect', this.connect);
 			this.socket.on('disconnect', this.disconnect);
