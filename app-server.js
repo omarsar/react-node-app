@@ -23,6 +23,10 @@ io.sockets.on('connection', function(socket){
 		console.log("disconnected: %s socket remaining", connections.length);
 	});
 
+	socket.on('join', function(payload){
+		console.log("Audience Joined: %s", payload.name);
+	});
+
 	//emit even to user when they come in: the data passed is title
 	socket.emit('welcome',{
 		title: title

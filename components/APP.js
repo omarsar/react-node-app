@@ -17,11 +17,15 @@ var APP = React.createClass({
 	},
 
 	componentWillMount(){
-		(process.env.NODE_ENV === 'development') ? this.socket = io('http://localhost:5000') : this.socket = io('https://fathomless-sea-2599.herokuapp.com');
-		//this.socket = io('https://fathomless-sea-2599.herokuapp.com');
+		(process.env.NODE_ENV === undefined) ? this.socket = io('http://localhost:5000') : this.socket = io('https://fathomless-sea-2599.herokuapp.com');
+		//this.socket = io('http://localhost:5000');
 		this.socket.on('connect', this.connect);
 		this.socket.on('disconnect', this.disconnect);
 		this.socket.on('welcome', this.welcome);
+	},
+
+	emit(eventName, payload){
+		this.socket.emit(eventName, payload);
 	},
 
 	connect(){
@@ -40,7 +44,7 @@ var APP = React.createClass({
 		return (
 			<div>
 				<Header title={this.state.title} status={this.state.status} />
-				<RouteHandler {...this.state}/>
+				<RouteHandler emit={this.emit} {...this.state}/>
 			</div>
 		);
 	}
