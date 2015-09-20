@@ -11,10 +11,14 @@ var APP = React.createClass({
 	getInitialState(){
 		return {
 			status: 'disconnected',
-			title: ''
+			title: '',
+			member: {}, //user of this socket
+			audience: [],
+			speaker: ''
 		}
 	},
 
+	//listener for events send from the app-server
 	componentWillMount(){
 		//TODO: need to fix automatic environment settings
 		//(process.env.NODE_ENV === 'production') ? this.socket = io('https://fathomless-sea-2599.herokuapp.com') : this.socket = io('http://localhost:5000');
@@ -22,30 +26,47 @@ var APP = React.createClass({
 		this.socket = io('https://fathomless-sea-2599.herokuapp.com')
 		this.socket.on('connect', this.connect);
 		this.socket.on('disconnect', this.disconnect);
-		this.socket.on('welcome', this.welcome);
+		this.socket.on('welcome', this.updateState);
+		this.socket.on('joined',this.joined);
+		this.socket.on('audience',this.updateAudience);
+		this.socket.on('start', this.updateState);
 	},
 
 	emit(eventName, payload){
 		this.socket.emit(eventName, payload);
 	},
 
-
-	connect(){
+	connect(){0
+		var member = (sessionStorage.member) ? JSON.parse(sessionStorage.member) : null;
+		if (member){
+			this.emit('join',member);
+		}
 		this.setState({status: 'connected'});
+
 	},
 
 	disconnect(){
 		this.setState({status: 'disconnected'});
 	},
 
-	welcome(serverState){
-		this.setState({title: serverState.title});
+	updateState(serverState){
+		this.setState(serverState);
+	},
+
+	joined(member){
+		//session storage
+		sessionStorage.member = JSON.stringify(member);
+		this.setState({member: member});
+	},
+
+	updateAudience(newAudience){
+		this.setState({audience: newAudience});
 	},
 
 	render() {
 		return (
 			<div>
-				<Header title={this.state.title} status={this.state.status} />
+				<Header {...this.state} />
 				<RouteHandler emit={this.emit} {...this.state}/>
 			</div>
 		);
