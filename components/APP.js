@@ -16,8 +16,10 @@ var APP = React.createClass({
 	},
 
 	componentWillMount(){
-		(process.env.NODE_ENV === 'production') ? this.socket = io('https://fathomless-sea-2599.herokuapp.com') : this.socket = io('http://localhost:5000');
+		//TODO: need to fix automatic environment settings
+		//(process.env.NODE_ENV === 'production') ? this.socket = io('https://fathomless-sea-2599.herokuapp.com') : this.socket = io('http://localhost:5000');
 		//this.socket = io('http://localhost:5000');
+		this.socket = io('https://fathomless-sea-2599.herokuapp.com')
 		this.socket.on('connect', this.connect);
 		this.socket.on('disconnect', this.disconnect);
 		this.socket.on('welcome', this.welcome);
@@ -26,6 +28,7 @@ var APP = React.createClass({
 	emit(eventName, payload){
 		this.socket.emit(eventName, payload);
 	},
+
 
 	connect(){
 		this.setState({status: 'connected'});
