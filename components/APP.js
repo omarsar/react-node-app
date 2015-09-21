@@ -22,31 +22,41 @@ var APP = React.createClass({
 	componentWillMount(){
 		//TODO: need to fix automatic environment settings
 		//(process.env.NODE_ENV === 'production') ? this.socket = io('https://fathomless-sea-2599.herokuapp.com') : this.socket = io('http://localhost:5000');
-		this.socket = io('http://localhost:5000');
+		//this.socket = io('http://localhost:5000');
 		//this.socket = io('https://fathomless-sea-2599.herokuapp.com')
 		this.socket.on('connect', this.connect);
 		this.socket.on('disconnect', this.disconnect);
 		this.socket.on('welcome', this.updateState);
 		this.socket.on('joined',this.joined);
 		this.socket.on('audience',this.updateAudience);
-		this.socket.on('start', this.updateState);
+		this.socket.on('start', this.start);
+		this.socket.on('end', this.updateState);
 	},
 
 	emit(eventName, payload){
 		this.socket.emit(eventName, payload);
 	},
 
-	connect(){0
+	connect(){
 		var member = (sessionStorage.member) ? JSON.parse(sessionStorage.member) : null;
-		if (member){
+		
+		if (member && member.type ==='audience'){
 			this.emit('join',member);
+		} else if(member && member.type === 'speaker'){
+			this.emit('start', {name: member.name, title: sessionStorage.title});
+			
 		}
+
 		this.setState({status: 'connected'});
 
 	},
 
 	disconnect(){
-		this.setState({status: 'disconnected'});
+		this.setState({
+			status: 'disconnected',
+			title: 'disconnected',
+			speaker: ''
+		});
 	},
 
 	updateState(serverState){
@@ -61,6 +71,13 @@ var APP = React.createClass({
 
 	updateAudience(newAudience){
 		this.setState({audience: newAudience});
+	},
+
+	start(presentation){
+		if (this.state.member.type === 'speaker'){
+			sessionStorage.title = presentation.title;
+		}
+		this.setState(presentation);
 	},
 
 	render() {

@@ -26,10 +26,16 @@ io.sockets.on('connection', function(socket){
 	socket.once('disconnect', function(){
 
 		var member = _.findWhere(audience, {id: this.id});
+
 		if (member){
 			audience.splice(audience.indexOf(member), 1);
 			io.sockets.emit('audience', audience);
-			console.log("left: %s (%s audience memners", member.name, audience.length);
+			console.log("left: %s (%s audience memners)", member.name, audience.length);
+		} else if(this.id === speaker.id){
+			console.log("%s has left. '%s' is over", speaker.name,title);
+			speaker = {};
+			title = "Untitled Presentation";
+			io.sockets.emit('end', {title: title, speaker: ''});
 		}
 
 		connections.splice(connections.indexOf(socket),1);
