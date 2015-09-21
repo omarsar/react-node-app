@@ -23597,7 +23597,7 @@
 			//TODO: need to fix automatic environment settings
 			//(process.env.NODE_ENV === 'production') ? this.socket = io('https://fathomless-sea-2599.herokuapp.com') : this.socket = io('http://localhost:5000');
 			//this.socket = io('http://localhost:5000');
-			//this.socket = io('https://fathomless-sea-2599.herokuapp.com')
+			this.socket = io('https://fathomless-sea-2599.herokuapp.com');
 			this.socket.on('connect', this.connect);
 			this.socket.on('disconnect', this.disconnect);
 			this.socket.on('welcome', this.updateState);
@@ -30941,6 +30941,8 @@
 		displayName: 'Audience',
 
 		render: function render() {
+			var fullAudience = this.props.audience;
+			var status = this.props.status;
 			return React.createElement(
 				'div',
 				null,
@@ -30960,8 +30962,25 @@
 							'p',
 							null,
 							this.props.audience.length,
-							' audience members contd'
+							' audience members connected:'
 						),
+						React.createElement(
+							'ul',
+							{ className: 'list-group' },
+							fullAudience.map(function (result) {
+								return React.createElement(
+									'li',
+									{ className: 'list-group-item', key: result.id },
+									React.createElement(
+										'span',
+										{ className: 'badge' },
+										status
+									),
+									result.name
+								);
+							})
+						),
+						React.createElement('br', null),
 						React.createElement(
 							'p',
 							null,
